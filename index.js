@@ -91,6 +91,13 @@ function checkIfAnyMovieHasRating(movies, rating = "G") {
     };
  */
 function findById(movies, id) {
+  if (movies.length === 0) throw "Your 'movies' array is empty";
+
+  const matchedIdObject = movies.find((eachMovie) => {
+    const { imdbID } = eachMovie;
+    return imdbID === id;
+  })
+  return matchedIdObject || null
 }
 
 /**
