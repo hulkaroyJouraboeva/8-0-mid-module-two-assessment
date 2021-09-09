@@ -36,11 +36,7 @@ const exampleMovies = require("./movies");
 function getAllMovieTitles(movies) {
   if (movies.length === 0) throw "Your 'movies' array is empty";
 
-  const movieTitles = movies.map((eachMovie) => {
-    const { title } = eachMovie;
-    return title;
-  })
-  return movieTitles;
+  return movies.map((eachMovie) => eachMovie.title);
 }
 
 /**
@@ -66,11 +62,7 @@ function getAllMovieTitles(movies) {
 function checkIfAnyMovieHasRating(movies, rating = "G") {
   if (movies.length === 0) throw "Your 'movies' array is empty";
 
-  const hasTheRating = movies.some((eachMovie) => {
-    const { rated } = eachMovie;
-    return rated === rating;
-  })
-  return hasTheRating;
+  return movies.some((eachMovie) => eachMovie.rated === rating);
 }
 
 /**
@@ -93,11 +85,7 @@ function checkIfAnyMovieHasRating(movies, rating = "G") {
 function findById(movies, id) {
   if (movies.length === 0) throw "Your 'movies' array is empty";
 
-  const matchedIdObject = movies.find((eachMovie) => {
-    const { imdbID } = eachMovie;
-    return imdbID === id;
-  })
-  return matchedIdObject || null;
+  return movies.find((eachMovie) => eachMovie.imdbID === id) || null;
 }
 
 /**
@@ -126,10 +114,7 @@ function findById(movies, id) {
 function filterByGenre(movies, genre) {
   if (movies.length === 0) throw "Your 'movies' array is empty";
 
-  const matchingGenresArr = movies.filter((eachMovie) => {
-    return eachMovie.genre.toLowerCase().includes(genre.toLowerCase());
-  })
-  return matchingGenresArr || [];
+  return movies.filter((eachMovie) => eachMovie.genre.toLowerCase().includes(genre.toLowerCase())) || [];
 }
 
 /**
@@ -161,14 +146,12 @@ function filterByGenre(movies, genre) {
 function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
   if (movies.length === 0) throw "Your 'movies' array is empty";
 
-  const moviesArr = movies.filter((eachMovie) => {
-    const { released } = eachMovie;
-    let releaseYear = released.split(' ');
+  return movies.filter((eachMovie) => {
+    let releaseYear = eachMovie.released.split(' ');
     releaseYear = Number(releaseYear[releaseYear.length - 1]);
 
     return releaseYear <= year;
   })
-  return moviesArr;
 }
 
 /**
@@ -200,15 +183,10 @@ function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
 function getRottenTomatoesScoreByMovie(movies) {
   if (movies.length === 0) throw "Your 'movies' array is empty";
 
-  const rotTomMovies = movies.map((eachMovie) => {
-
-    const rotTomObj = eachMovie.ratings.find((rating) => {
-      return rating.source === "Rotten Tomatoes";
-    })
-    
+  return movies.map((eachMovie) => {
+    const rotTomObj = eachMovie.ratings.find((rating) => rating.source === "Rotten Tomatoes");
     return { [eachMovie.title]: rotTomObj.value };
   })
-  return rotTomMovies;
 }
 
 // Do not change anything below this line.
